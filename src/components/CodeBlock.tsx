@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import type { Lesson } from '../types/lesson'
 
 const codeTokenPattern =
-  /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|`(?:\\.|[^`\\])*`|\b(?:const|let|var|return|if|else|async|await|function|import|from|export|type|interface|new)\b|\b(?:true|false|null|undefined)\b|\b\d[\d_]*\b|\b(?:useQuery|useMutation|useQueryClient|QueryClient|QueryClientProvider|prefetchQuery|invalidateQueries|setQueryData|cancelQueries|getQueryData|createRoot)\b|[A-Za-z_$][\w$]*(?=\s*:)|[A-Za-z_$][\w$]*(?=\s*\())/g
+  /(\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|`(?:\\.|[^`\\])*`|\b(?:const|let|var|return|if|else|async|await|function|import|from|export|type|interface|new)\b|\b(?:true|false|null|undefined)\b|\b\d[\d_]*\b|\b(?:useQuery|useSuspenseQuery|useInfiniteQuery|useMutation|useQueryClient|queryOptions|QueryClient|QueryClientProvider|HydrationBoundary|ReactQueryDevtools|Suspense|ErrorBoundary|prefetchQuery|invalidateQueries|refetchQueries|removeQueries|resetQueries|setQueryData|setQueriesData|cancelQueries|getQueryData|dehydrate|createRoot)\b|[A-Za-z_$][\w$]*(?=\s*:)|[A-Za-z_$][\w$]*(?=\s*\())/g
 
 function getCodeTokenClass(token: string) {
   if (token.startsWith('//') || token.startsWith('/*')) return 'code-token comment'
@@ -10,7 +10,7 @@ function getCodeTokenClass(token: string) {
   if (/^(true|false|null|undefined)$/.test(token)) return 'code-token literal'
   if (/^\d/.test(token)) return 'code-token number'
   if (
-    /^(useQuery|useMutation|useQueryClient|QueryClient|QueryClientProvider|prefetchQuery|invalidateQueries|setQueryData|cancelQueries|getQueryData|createRoot)$/.test(
+    /^(useQuery|useSuspenseQuery|useInfiniteQuery|useMutation|useQueryClient|queryOptions|QueryClient|QueryClientProvider|HydrationBoundary|ReactQueryDevtools|Suspense|ErrorBoundary|prefetchQuery|invalidateQueries|refetchQueries|removeQueries|resetQueries|setQueryData|setQueriesData|cancelQueries|getQueryData|dehydrate|createRoot)$/.test(
       token,
     )
   ) {

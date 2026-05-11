@@ -27,8 +27,10 @@ export const mentalModel: Lesson = {
     title: '声明一个课程查询',
     language: 'tsx',
     code: `const lessonQuery = useQuery({
+  // queryKey 是这份远端数据的缓存地址
   queryKey: ['lesson', lessonId],
   queryFn: () => fetchLesson(lessonId),
+  // 60 秒内重新挂载组件不会立刻重新请求
   staleTime: 60_000,
 })`,
   },

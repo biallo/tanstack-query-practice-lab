@@ -29,6 +29,7 @@ function prefetchLesson(id: string) {
   queryClient.prefetchQuery({
     queryKey: ['lesson', id],
     queryFn: () => fetchLesson(id),
+    // 用户真正进入详情页时，5 分钟内可直接复用预取结果
     staleTime: 5 * 60_000,
   })
 }`,

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import type { Lesson } from '../types/lesson'
 
 type SidebarProps = {
@@ -17,6 +18,27 @@ export function Sidebar({
   onPrefetchLesson,
   onSelectLesson,
 }: SidebarProps) {
+  const courseListRef = useRef<HTMLElement | null>(null)
+  const selectedItemRef = useRef<HTMLButtonElement | null>(null)
+
+  useEffect(() => {
+    const courseList = courseListRef.current
+    const selectedItem = selectedItemRef.current
+
+    if (!courseList || !selectedItem) return
+
+    const listRect = courseList.getBoundingClientRect()
+    const itemRect = selectedItem.getBoundingClientRect()
+    const isFullyVisible = itemRect.top >= listRect.top && itemRect.bottom <= listRect.bottom
+
+    if (isFullyVisible) return
+
+    selectedItem.scrollIntoView({
+      block: 'center',
+      inline: 'nearest',
+    })
+  }, [selectedLessonId])
+
   return (
     <aside className="sidebar">
       <div className="sidebar-fixed">
@@ -50,7 +72,7 @@ export function Sidebar({
         </label>
       </div>
 
-      <nav className="course-list" aria-label="课程列表">
+      <nav className="course-list" ref={courseListRef} aria-label="课程列表">
         {lessons.map((lesson) => {
           const isSelected = selectedLessonId === lesson.id
           const isDone = completedLessons.has(lesson.id)
@@ -59,6 +81,7 @@ export function Sidebar({
             <button
               className={`course-item${isSelected ? ' selected' : ''}`}
               key={lesson.id}
+              ref={isSelected ? selectedItemRef : null}
               type="button"
               onClick={() => onSelectLesson(lesson.id)}
               onMouseEnter={() => onPrefetchLesson(lesson.id)}

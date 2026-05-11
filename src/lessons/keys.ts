@@ -25,6 +25,7 @@ export const keys: Lesson = {
     title: '列表查询 key',
     language: 'tsx',
     code: `useQuery({
+  // 所有影响结果的筛选条件都要放进 queryKey
   queryKey: ['issues', { status, page, assigneeId }],
   queryFn: () => getIssues({ status, page, assigneeId }),
 })`,

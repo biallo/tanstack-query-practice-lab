@@ -23,10 +23,12 @@ export const queryLifecycle: Lesson = {
   example: {
     title: '区分首屏加载和后台刷新',
     language: 'tsx',
-    code: `if (query.isPending) return <Skeleton />
+    code: `// 还没有任何可展示数据时，才展示首屏骨架
+if (query.isPending) return <Skeleton />
 if (query.isError) return <ErrorView error={query.error} />
 
 return (
+  // 已有数据时，后台刷新不应该清空主体内容
   <Course data={query.data} refreshing={query.isFetching} />
 )`,
   },

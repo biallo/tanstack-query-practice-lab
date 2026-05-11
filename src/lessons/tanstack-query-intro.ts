@@ -32,7 +32,8 @@ export const tanstackQueryIntro: Lesson = {
   example: {
     title: '应用入口接入 QueryClient',
     language: 'tsx',
-    code: `const queryClient = new QueryClient()
+    code: `// QueryClient 持有整个应用的查询缓存和默认策略
+const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>

@@ -26,12 +26,15 @@ export const optimistic: Lesson = {
     code: `useMutation({
   mutationFn: toggleStar,
   onMutate: async (id) => {
+    // 避免正在进行的列表请求覆盖乐观结果
     await queryClient.cancelQueries({ queryKey: ['repos'] })
     const previous = queryClient.getQueryData(['repos'])
+    // 先把预测结果写进缓存，让 UI 立即响应
     queryClient.setQueryData(['repos'], updateStar(id))
     return { previous }
   },
   onError: (_error, _id, context) => {
+    // 服务端拒绝时回滚到 mutation 前的快照
     queryClient.setQueryData(['repos'], context?.previous)
   },
   onSettled: () => queryClient.invalidateQueries({ queryKey: ['repos'] }),

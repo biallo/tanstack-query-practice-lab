@@ -28,6 +28,7 @@ export const mutations: Lesson = {
 const createTodo = useMutation({
   mutationFn: addTodo,
   onSuccess: () => {
+    // 创建成功后，列表缓存已经过期，需要重新读取
     queryClient.invalidateQueries({ queryKey: ['todos'] })
   },
 })`,
